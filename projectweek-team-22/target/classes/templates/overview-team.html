@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head (title='team.overview')">
+</head>
+<body>
+<header th:replace="fragments/header :: header (current='overview-team')"></header>
+<main>
+
+    <div class="container-lg p-2">
+
+        <h2 class="display-6" th:each="title : ${overviewTitle}" th:text="#{${title}}" ></h2>
+
+        <div th:if="${confirmationMessage}!=null" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="#{${confirmationMessage}}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${teamError}!=null" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="#{${teamError}}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${teams.empty}" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span th:text="#{team.overview.empty}"></span>
+        </div>
+
+
+        <div th:unless="${teams.empty}">
+            <table class="table table-striped table-responsive-lg">
+                    <thead>
+                        <tr>
+                            <th th:text="#{team.name.label}"></th>
+                            <th th:text="#{team.minAge.label}"></th>
+                            <th th:text="#{team.maxAge.label}"></th>
+                            <th th:text="#{team.numberOfPlayers.label}"></th>
+                            <th th:text="#{team.update.label}"></th>
+                            <th th:text="#{team.delete.label}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="team : ${teams}">
+                            <td th:text="${team.name}"></td>
+                            <td th:text="${team.minAge}"></td>
+                            <td th:text="${team.maxAge}"></td>
+                            <td th:text="${team.numberOfPlayers}"></td>
+                            <td><a th:href="@{/team_update/{id}(id=${team.id})}" class="btn btn-primary">Update</a></td>
+                            <td><a th:href="@{/team_delete/{id}(id=${team.id})}" class="btn btn-primary">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false" th:text="#{sort.dropdownbox}"></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/team_overview" th:text="#{team.sort.default}"></a></li>
+                        <li><a class="dropdown-item" href="/team_overview/namesort" th:text="#{team.sort.name}"></a></li>
+                        <li><a class="dropdown-item" href="/team_overview/playersort" th:text="#{team.sort.player}"></a></li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+</body>
+</html>
